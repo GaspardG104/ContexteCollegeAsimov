@@ -9,6 +9,6 @@ router.get('/create', stageController.renderCreateForm);
 router.post('/create', stageController.createStage);
 
 // Route pour VOIR la liste des stages (avec l'alerte > 15 recherches)
-router.get('/', stageController.getAllStages);
+router.get('/view', stageController.getAllStages);
 
 module.exports = router;

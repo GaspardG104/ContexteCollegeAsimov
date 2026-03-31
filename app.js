@@ -3,11 +3,15 @@ const cors = require('cors');
 require('dotenv').config();
 const db = require('./config/db'); // On importe la connexion MySQL
 
+const path = require('path');
 const app = express();
 
 // Middlewares
 app.use(cors());
 app.use(express.json()); // Pour lire le JSON envoyé dans les requêtes
+
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
 
 // Route de test
 app.get('/', (req, res) => {

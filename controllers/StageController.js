@@ -21,9 +21,16 @@ const assignerReferent = async () => {
 };
 
 exports.createStage = async (req, res) => {
+    const idProf = await assignerReferent(); // verification de sécurité si au moins un prof existe
+    
+    if (!idProf) {
+        return res.status(500).send("Erreur : Aucun professeur n'est disponible pour l'affectation.");
+    }
+
     try {
         // 1. Appeler l'algorithme pour avoir un prof
         const idProfChoisi = await assignerReferent();
+        
         
         // 2. Récupérer les données du formulaire (Create.ejs)
         const nouveauStage = {
@@ -45,4 +52,35 @@ exports.renderCreateForm = async (req, res) => {
     // On va chercher les élèves pour remplir la liste déroulante du formulaire
     const [eleves] = await db.query('SELECT id_eleve, nom, prenom FROM eleves');
     res.render('stages/Create', { eleves: eleves });
+};
+
+const Stage = require('../models/Stage'); // On importe le modèle
+
+// Fonction pour afficher la liste de tous les stages (avec alertes > 15)
+exports.getAllStages = async (req, res) => {
+    try {
+        // 1. On appelle le modèle (qui doit maintenant pointer vers stage_recherches)
+        const recherches = await Stage.getAllRecherches();
+        
+        // Debug : Affiche les données reçues dans ton terminal VS Code
+        console.log("Données reçues de la BDD :", recherches);
+
+        // 2. On traite les données pour ajouter l'indicateur d'alerte
+        const stagesTraites = recherches.map(r => ({
+            ...r,
+            // On crée un booléen 'alerte' si le nombre de lettres dépasse 15
+            alerte: r.nb_lettres_envoyees > 15 
+        }));
+
+        // 3. On envoie les données à ta vue 'view.ejs'
+        res.render('stages/view', { 
+            stages: stagesTraites, // On l'appelle 'stages' pour que ton EJS actuel fonctionne
+            title: "Suivi des recherches de stage" 
+        });
+
+    } catch (error) {
+        // On affiche l'erreur complète dans le terminal pour débugger plus vite
+        console.error("Erreur détaillée dans getAllStages:", error);
+        res.status(500).send("Erreur lors de la récupération : " + error.message);
+    }
 };

@@ -12,3 +12,9 @@ INSERT INTO enseignants (nom, prenom) VALUES
 ('Lemoine', 'Marc'),
 ('Rousseau', 'Claire'),
 ('Garnier', 'Lucas');
+
+INSERT INTO stages (id_eleve, entreprise, coordonnees_contact, etat_convention) 
+VALUES (1, 'GGGCorp', '07 07 07 07 07', 'Vierge');
+
+INSERT INTO stage_recherches (id_eleve, entreprise_contactee, nb_lettres_envoyees, nb_lettres_recues, resultat) 
+VALUES (1, 'GGGCorp', 12, 1,'en attente');

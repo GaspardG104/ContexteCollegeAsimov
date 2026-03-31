@@ -1,0 +1,49 @@
+<body class="container mt-4">
+    <h2>Tableau de bord des stages</h2>
+    <a href="/stages/create" class="btn btn-primary mb-3">+ Nouvelle recherche</a>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Élève (ID)</th>
+                <th>Entreprise</th>
+                <th>Recherches effectuées</th>
+                <th>État Convention</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% stages.forEach(stage=> { %>
+                <tr class="<%= stage.alerte_recherche ? 'alerte-critique' : '' %>">
+                    <td>
+                        <%= stage.id_eleve %>
+                    </td>
+                    <td>
+                        <%= stage.entreprise %>
+                    </td>
+            <% recherches.forEach(r => { %>
+                <tr class="<%= r.alerte ? 'table-danger' : '' %>">
+                    <td><%= r.nom %> <%= r.prenom %></td>
+                    <td><%= r.entreprise_contactee %></td>
+                    <td>
+                        <%= r.nb_lettres_envoyees %> 
+                        <% if(r.alerte) { %>
+                            <span class="badge bg-danger">⚠️ ALERTE (>15)</span>
+                        <% } %>
+                    </td>
+                    <td><%= r.date_entretien ? r.date_entretien.toLocaleDateString() : 'Pas encore' %></td>
+                    <td>
+                        <a href="#" class="btn btn-sm btn-info">Détails</a>
+                    </td>
+                </tr>
+            <% }) %>
+                    <td>
+                        <%= stage.etat_convention %>
+                    </td>
+                    <td>
+                        <a href="/stages/edit/<%= stage.id_stage %>" class="btn btn-sm btn-warning">Modifier</a>
+                    </td>
+                </tr>
+                <% }) %>
+        </tbody>
+    </table>
