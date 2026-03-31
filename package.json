@@ -3,9 +3,10 @@
   "version": "1.0.0",
   "description": "Répertoire du contexte d'examen COLLEGE ASIMOV du BTS SIO opt. SLAM 2026",
   "main": "app.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+"scripts": {
+  "start": "node app.js",
+  "dev": "nodemon app.js"
+},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/GaspardG104/ContexteCollegeAsimov.git"
@@ -23,5 +24,8 @@
     "dotenv": "^17.3.1",
     "express": "^5.2.1",
     "mysql2": "^3.20.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
   }
 }
