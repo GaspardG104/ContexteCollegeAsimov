@@ -6,3 +6,5 @@ Lien du PDF du contexte : http://david.roumanet.free.fr/BTS-SIO/Bloc2-Dev/400%20
 Lien du Kanban : https://padlet.com/gaspardguidetti/kanban-coll-ge-asimov-4dwtu3sxlbus4ciq
 
 Lien du Gantt : https://gaspardguidettis-team.monday.com/boards/5090795139
+
+![alt text](image.png)
