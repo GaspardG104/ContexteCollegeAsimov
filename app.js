@@ -28,3 +28,8 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`Serveur démarré sur : http://localhost:${PORT}`);
 });
+
+const stageRoutes = require('./routes/stageRoutes');
+
+// On dit à Express : "Toutes les routes commençant par /stages utilisent stageRoutes"
+app.use('/stages', stageRoutes);

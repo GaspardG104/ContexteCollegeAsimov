@@ -1,0 +1,47 @@
+<div class="container mt-5">
+    <div class="card shadow">
+        <div class="card-header bg-primary text-white">
+            <h2 class="mb-0">Nouvelle recherche de stage</h2>
+        </div>
+        <div class="card-body">
+            <form action="/stages/create" method="POST">
+                
+                <div class="mb-3">
+                    <label for="id_eleve" class="form-label">Élève concerné</label>
+                    <select class="form-select" id="id_eleve" name="id_eleve" required>
+                        <option value="" disabled selected>Choisir un élève...</option>
+                        <% eleves.forEach(eleve => { %>
+                            <option value="<%= eleve.id_eleve %>">
+                                <%= eleve.nom %> <%= eleve.prenom %>
+                            </option>
+                        <% }) %>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label for="entreprise" class="form-label">Nom de l'entreprise</label>
+                    <input type="text" class="form-control" id="entreprise" name="entreprise" placeholder="Ex: Google, Boulangerie du coin..." required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="coordonnees_contact" class="form-label">Coordonnées du tuteur (Email, Tel, Nom)</label>
+                    <textarea class="form-control" id="coordonnees_contact" name="coordonnees_contact" rows="3" placeholder="M. Jean Untel - 06... - jean@entreprise.com"></textarea>
+                </div>
+
+                <div class="mb-3">
+                    <label for="etat_convention" class="form-label">État de la convention</label>
+                    <select class="form-select" id="etat_convention" name="etat_convention">
+                        <option value="Vierge" selected>Vierge</option>
+                        <option value="Remplie">Remplie</option>
+                        <option value="Validée">Validée</option>
+                    </select>
+                </div>
+
+                <div class="d-flex justify-content-between">
+                    <a href="/stages" class="btn btn-secondary">Annuler</a>
+                    <button type="submit" class="btn btn-success">Enregistrer le stage</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
