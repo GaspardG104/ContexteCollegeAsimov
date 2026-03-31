@@ -21,30 +21,27 @@ const assignerReferent = async () => {
 };
 
 exports.createStage = async (req, res) => {
-    const idProf = await assignerReferent(); // verification de sécurité si au moins un prof existe
-    
-    if (!idProf) {
-        return res.status(500).send("Erreur : Aucun professeur n'est disponible pour l'affectation.");
-    }
-
     try {
-        // 1. Appeler l'algorithme pour avoir un prof
+        // Un seul appel suffit
         const idProfChoisi = await assignerReferent();
         
+        if (!idProfChoisi) {
+            return res.status(500).send("Erreur : Aucun professeur disponible.");
+        }
         
-        // 2. Récupérer les données du formulaire (Create.ejs)
         const nouveauStage = {
             ...req.body,
             id_enseignant: idProfChoisi,
-            date_creation: new Date()
+            // Correction : ta table s'appelle 'stage_recherches', 
+            // assure-toi que les noms correspondent
+            date_creation: new Date() 
         };
 
-        // 3. Envoyer au modèle pour insertion
         await db.create(nouveauStage);
-        
-        res.redirect('/stages/view'); // Rediriger vers la liste
+        res.redirect('/stages/view');
     } catch (error) {
-        res.status(500).send("Erreur lors de la création du stage");
+        console.error(error);
+        res.status(500).send("Erreur lors de la création");
     }
 };
 

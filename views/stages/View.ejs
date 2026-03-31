@@ -13,35 +13,27 @@
             </tr>
         </thead>
         <tbody>
-            <% stages.forEach(stage=> { %>
-                <tr class="<%= stage.alerte_recherche ? 'alerte-critique' : '' %>">
-                    <td>
-                        <%= stage.id_eleve %>
-                    </td>
-                    <td>
-                        <%= stage.entreprise %>
-                    </td>
-            <% recherches.forEach(r => { %>
+            <% stages.forEach(r=> { %>
                 <tr class="<%= r.alerte ? 'table-danger' : '' %>">
-                    <td><%= r.nom %> <%= r.prenom %></td>
-                    <td><%= r.entreprise_contactee %></td>
                     <td>
-                        <%= r.nb_lettres_envoyees %> 
-                        <% if(r.alerte) { %>
-                            <span class="badge bg-danger">⚠️ ALERTE (>15)</span>
-                        <% } %>
+                        <%= r.id_eleve %> - <%= r.nom %>
+                                <%= r.prenom %>
                     </td>
-                    <td><%= r.date_entretien ? r.date_entretien.toLocaleDateString() : 'Pas encore' %></td>
                     <td>
+                        <%= r.entreprise_contactee %>
+                    </td>
+                    <td>
+                        <%= r.nb_lettres_envoyees %>
+                            <% if(r.alerte) { %>
+                                <span class="badge bg-danger">⚠️ ALERTE (>15)</span>
+                                <% } %>
+                    </td>
+                    <td>
+                        <%= r.etat_convention || 'N/A' %>
+                    </td>
+                    <td>
+                        <a href="/stages/edit/<%= r.id_recherche %>" class="btn btn-sm btn-warning">Modifier</a>
                         <a href="#" class="btn btn-sm btn-info">Détails</a>
-                    </td>
-                </tr>
-            <% }) %>
-                    <td>
-                        <%= stage.etat_convention %>
-                    </td>
-                    <td>
-                        <a href="/stages/edit/<%= stage.id_stage %>" class="btn btn-sm btn-warning">Modifier</a>
                     </td>
                 </tr>
                 <% }) %>
