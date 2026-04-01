@@ -1,4 +1,5 @@
 const db = require('../models/Stage');
+const path = require('path');
 
 // Fonction pour trouver le prochain prof (Round-Robin)
 const assignerReferent = async () => {
@@ -174,7 +175,8 @@ exports.generatePDF = async (req, res) => {
         // --- DESIGN DU PDF ---
         
         // En-tête
-        //doc.image('../../public/css/layouts/logo.png', {width: 100});
+        //logo du collège
+        doc.image(path.join(__dirname, '..', 'public', 'layouts', 'logo.png'), { width: 65 });
         
         doc.fontSize(20).text('CONVENTION DE STAGE', { align: 'center', underline: true });
         doc.moveDown(2);

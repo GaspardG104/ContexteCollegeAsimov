@@ -39,5 +39,6 @@ app.listen(PORT, () => {
 
 const stageRoutes = require('./routes/stageRoutes');
 
+
 // On dit à Express : "Toutes les routes commençant par /stages utilisent stageRoutes"
 app.use('/stages', stageRoutes);
