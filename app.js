@@ -10,6 +10,9 @@ const app = express();
 app.use(cors());
 app.use(express.json()); // Pour lire le JSON envoyé dans les requêtes
 
+// Cette ligne est CRUCIALRE pour le CSS et les images
+app.use(express.static(path.join(__dirname, 'public')));
+
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
