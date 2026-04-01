@@ -100,6 +100,7 @@ CREATE TABLE projets (
     date_debut DATE,
     date_fin DATE,
     id_eleve_responsable INT, -- Un élève peut être responsable d'un projet [cite: 274]
+    est_valide BOOLEAN DEFAULT FALSE,
     FOREIGN KEY (id_eleve_responsable) REFERENCES eleves(id_eleve)
 );
 
