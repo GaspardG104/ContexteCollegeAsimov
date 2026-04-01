@@ -205,7 +205,11 @@ exports.generatePDF = async (req, res) => {
 
         const startY = doc.y;
         doc.text('Signature de l\'élève :', 50, startY);
-        doc.text('Cachet de l\'entreprise :', 350, startY);
+        doc.text('Cachet de l\'entreprise :', 300, startY);
+        doc.moveDown(4);
+
+        doc.text('FONDATION ASIMOV 20 avenue Prosper Mérimée 38100 GRENOBLE FRANCE', 350);
+
 
         // 4. Finaliser le document
         doc.end();
