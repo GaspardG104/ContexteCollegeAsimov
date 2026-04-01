@@ -100,13 +100,27 @@ exports.getAllStages = async (req, res) => {
 // Affiche le formulaire de modification
 exports.renderEditForm = async (req, res) => {
     try {
-        const recherche = await Stage.getById(req.params.id);
-        res.render('stages/Edit', {
-            recherche: recherche,
+        // 1. On récupère l'ID depuis l'URL
+        const id = req.params.id;
+
+        // 2. On récupère les données de cette recherche spécifique
+        const [recherches] = await db.query('SELECT * FROM stage_recherches WHERE id_recherche = ?', [id]);
+        
+        // 3. On récupère aussi la liste des élèves (au cas où on veut changer l'élève)
+        const [eleves] = await db.query('SELECT id_eleve, nom, prenom FROM eleves');
+
+        if (recherches.length === 0) {
+            return res.status(404).send("Recherche introuvable");
+        }
+
+        // 4. On envoie tout à la vue Edit.ejs
+        res.render('stages/Edit', { 
+            recherche: recherches[0], 
+            eleves: eleves,
             title: "Modifier la recherche"
         });
     } catch (error) {
-        res.status(500).send("Erreur lors de l'accès au formulaire");
+        res.status(500).send("Erreur : " + error.message);
     }
 };
 
@@ -127,5 +141,75 @@ exports.deleteRecherche = async (req, res) => {
         res.redirect('/stages/view');
     } catch (error) {
         res.status(500).send("Erreur lors de la suppression");
+    }
+};
+
+const PDFDocument = require('pdfkit');
+
+exports.generatePDF = async (req, res) => {
+    try {
+        const id = req.params.id;
+
+        // 1. Récupérer les infos complètes (Jointure recherche + élève)
+    const [rows] = await db.query(`
+        SELECT r.*, e.nom, e.prenom, e.id_classe_actuelle 
+        FROM stage_recherches r
+        JOIN eleves e ON r.id_eleve = e.id_eleve
+        WHERE r.id_recherche = ?`, [id]);
+
+        if (rows.length === 0) return res.status(404).send("Recherche non trouvée");
+        const data = rows[0];
+
+        // 2. Créer le document PDF
+        const doc = new PDFDocument({ size: 'A4', margin: 50 });
+
+        // 3. Configurer la réponse du navigateur pour le téléchargement
+        const fileName = `Convention_${data.nom}_${data.entreprise_contactee}.pdf`;
+        res.setHeader('Content-Type', 'application/pdf');
+        res.setHeader('Content-Disposition', `attachment; filename=${fileName}`);
+
+        // Envoyer le flux PDF directement vers la réponse HTTP
+        doc.pipe(res);
+
+        // --- DESIGN DU PDF ---
+        
+        // En-tête
+        //doc.image('../../public/css/layouts/logo.png', {width: 100});
+        
+        doc.fontSize(20).text('CONVENTION DE STAGE', { align: 'center', underline: true });
+        doc.moveDown(2);
+
+        doc.fontSize(12).text(`Date de génération : ${new Date().toLocaleDateString()}`, { align: 'right' });
+        doc.moveDown();
+
+        // Section Élève
+        doc.fillColor('#2c3e50').fontSize(14).text('1. INFORMATIONS SUR L\'ÉLÈVE', { underline: true });
+        doc.fillColor('black').fontSize(12);
+        doc.text(`Nom : ${data.nom.toUpperCase()}`);
+        doc.text(`Prénom : ${data.prenom}`);
+        doc.text(`Classe : ${data.id_classe_actuelle || 'Non renseignée'}`);
+        doc.moveDown();
+
+        // Section Entreprise
+        doc.fillColor('#2c3e50').fontSize(14).text('2. INFORMATIONS SUR L\'ENTREPRISE', { underline: true });
+        doc.fillColor('black').fontSize(12);
+        doc.text(`Entreprise d'accueil : ${data.entreprise_contactee}`);
+        doc.text(`Date prévue de l'entretien : ${data.date_entretien ? data.date_entretien.toLocaleDateString() : 'À définir'}`);
+        doc.moveDown(2);
+
+        // Zones de signatures
+        doc.text('Fait à .........................., le ..........................', { align: 'right' });
+        doc.moveDown(3);
+
+        const startY = doc.y;
+        doc.text('Signature de l\'élève :', 50, startY);
+        doc.text('Cachet de l\'entreprise :', 350, startY);
+
+        // 4. Finaliser le document
+        doc.end();
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Erreur lors de la génération du PDF");
     }
 };

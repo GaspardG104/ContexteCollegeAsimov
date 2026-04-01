@@ -20,4 +20,7 @@ router.post('/edit/:id', stageController.updateRecherche);
 // Suppression
 router.get('/delete/:id', stageController.deleteRecherche);
 
+// Le :id permet de savoir pour quelle recherche on génère la convention
+router.get('/pdf/:id', stageController.generatePDF);
+
 module.exports = router;
