@@ -3,11 +3,18 @@ const cors = require('cors');
 require('dotenv').config();
 const db = require('./config/db'); // On importe la connexion MySQL
 
+const path = require('path');
 const app = express();
 
 // Middlewares
 app.use(cors());
 app.use(express.json()); // Pour lire le JSON envoyé dans les requêtes
+
+// Cette ligne est CRUCIALRE pour le CSS et les images
+app.use(express.static(path.join(__dirname, 'public')));
+
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
 
 // Route de test
 app.get('/', (req, res) => {
@@ -28,3 +35,8 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`Serveur démarré sur : http://localhost:${PORT}`);
 });
+
+const stageRoutes = require('./routes/stageRoutes');
+
+// On dit à Express : "Toutes les routes commençant par /stages utilisent stageRoutes"
+app.use('/stages', stageRoutes);

@@ -1,0 +1,35 @@
+/* Identité visuelle - Collège Asimov */
+:root {
+    --primary-color: #2c3e50;    /* Bleu nuit sérieux */
+    --secondary-color: #34495e;
+    --accent-color: #3498db;     /* Bleu clair pour les actions */
+    --success-color: #27ae60;
+    --danger-color: #e74c3c;
+    --light-bg: #f8f9fa;
+}
+
+body {
+    background-color: var(--light-bg);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: var(--primary-color);
+}
+
+.navbar-asimov {
+    background-color: var(--primary-color);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.card {
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+.btn-primary {
+    background-color: var(--accent-color);
+    border: none;
+}
+
+.btn-primary:hover {
+    background-color: #2980b9;
+}
