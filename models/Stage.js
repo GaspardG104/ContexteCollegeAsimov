@@ -6,6 +6,13 @@ const Stage = {
         return connection.query(sql, params);
     },
 
+    // Trouver une recherche par son ID
+    getById: async (id) => {
+        const sql = 'SELECT * FROM stage_recherches WHERE id_recherche = ?';
+        const [rows] = await connection.query(sql, [id]);
+        return rows[0];
+    },
+
     // Insertion d'un nouveau stage
     create: async (data) => {
         const sql = 'INSERT INTO stage_recherches SET ?';
@@ -18,6 +25,7 @@ const Stage = {
         const [rows] = await connection.query(sql);
         return rows;
     },
+
     // Récupérer le suivi des recherches (pour l'affichage avec alertes)
     getAllRecherches: async () => {
         const sql = `
@@ -33,7 +41,19 @@ const Stage = {
     createStageValide: async (data) => {
         const sql = 'INSERT INTO stages SET ?';
         return connection.query(sql, [data]);
-    }
+    },
+
+    // Mettre à jour une recherche
+    update: async (id, data) => {
+        const sql = 'UPDATE stage_recherches SET ? WHERE id_recherche = ?';
+        return connection.query(sql, [data, id]);
+    },
+
+    // Supprimer une recherche
+    delete: async (id) => {
+        const sql = 'DELETE FROM stage_recherches WHERE id_recherche = ?';
+        return connection.query(sql, [id]);
+    },
 };
 
 module.exports = Stage;

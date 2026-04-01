@@ -1,47 +1,72 @@
-<div class="container mt-5">
-    <div class="card shadow">
-        <div class="card-header bg-primary text-white">
-            <h2 class="mb-0">Nouvelle recherche de stage</h2>
-        </div>
-        <div class="card-body">
-            <form action="/stages/create" method="POST">
-                
-                <div class="mb-3">
-                    <label for="id_eleve" class="form-label">Élève concerné</label>
-                    <select class="form-select" id="id_eleve" name="id_eleve" required>
-                        <option value="" disabled selected>Choisir un élève...</option>
-                        <% eleves.forEach(eleve => { %>
-                            <option value="<%= eleve.id_eleve %>">
-                                <%= eleve.nom %> <%= eleve.prenom %>
-                            </option>
-                        <% }) %>
-                    </select>
-                </div>
+<%- include('../../public/layouts/header') %>
 
-                <div class="mb-3">
-                    <label for="entreprise" class="form-label">Nom de l'entreprise</label>
-                    <input type="text" class="form-control" id="entreprise" name="entreprise" placeholder="Ex: Google, Boulangerie du coin..." required>
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow border-0">
+                <div class="card-header bg-primary text-white p-3">
+                    <h3 class="mb-0"><i class="bi bi-plus-circle me-2"></i>Nouvelle recherche de stage</h3>
                 </div>
+                <div class="card-body p-4">
+                    <form action="/stages/create" method="POST">
+                        
+                        <div class="mb-4">
+                            <label for="id_eleve" class="form-label fw-bold">Élève concerné</label>
+                            <select class="form-select border-primary" id="id_eleve" name="id_eleve" required>
+                                <option value="" disabled selected>Choisir un élève...</option>
+                                <% eleves.forEach(eleve => { %>
+                                    <option value="<%= eleve.id_eleve %>">
+                                        <%= eleve.nom.toUpperCase() %> <%= eleve.prenom %>
+                                    </option>
+                                <% }) %>
+                            </select>
+                        </div>
 
-                <div class="mb-3">
-                    <label for="coordonnees_contact" class="form-label">Coordonnées du tuteur (Email, Tel, Nom)</label>
-                    <textarea class="form-control" id="coordonnees_contact" name="coordonnees_contact" rows="3" placeholder="M. Jean Untel - 06... - jean@entreprise.com"></textarea>
-                </div>
+                        <div class="mb-4">
+                            <label for="entreprise_contactee" class="form-label fw-bold">Nom de l'entreprise</label>
+                            <input type="text" class="form-control" id="entreprise_contactee" name="entreprise_contactee" placeholder="Ex: Google, Boulangerie du coin..." required>
+                        </div>
 
-                <div class="mb-3">
-                    <label for="etat_convention" class="form-label">État de la convention</label>
-                    <select class="form-select" id="etat_convention" name="etat_convention">
-                        <option value="Vierge" selected>Vierge</option>
-                        <option value="Remplie">Remplie</option>
-                        <option value="Validée">Validée</option>
-                    </select>
-                </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-4">
+                                <label for="nb_lettres_envoyees" class="form-label fw-bold">Lettres envoyées</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+                                    <input type="number" class="form-control" id="nb_lettres_envoyees" name="nb_lettres_envoyees" value="0" min="0">
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-4">
+                                <label for="nb_lettres_recues" class="form-label fw-bold">Réponses reçues</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-envelope-open"></i></span>
+                                    <input type="number" class="form-control" id="nb_lettres_recues" name="nb_lettres_recues" value="0" min="0">
+                                </div>
+                            </div>
+                        </div>
 
-                <div class="d-flex justify-content-between">
-                    <a href="/stages" class="btn btn-secondary">Annuler</a>
-                    <button type="submit" class="btn btn-success">Enregistrer le stage</button>
+                        <div class="mb-4">
+                            <label for="date_entretien" class="form-label fw-bold">Date d'entretien prévue</label>
+                            <input type="date" class="form-control" id="date_entretien" name="date_entretien">
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="resultat" class="form-label fw-bold">Résultat / Remarques</label>
+                            <textarea class="form-control" id="resultat" name="resultat" rows="3" placeholder="Détails de l'échange ou résultat de l'entretien..."></textarea>
+                        </div>
+
+                        <div class="d-flex justify-content-between mt-2">
+                            <a href="/stages/view" class="btn btn-outline-secondary px-4">
+                                <i class="bi bi-arrow-left me-1"></i>Annuler
+                            </a>
+                            <button type="submit" class="btn btn-success px-5 shadow-sm">
+                                <i class="bi bi-check-lg me-1"></i>Enregistrer la recherche
+                            </button>
+                        </div>
+                    </form>
                 </div>
-            </form>
+            </div>
         </div>
     </div>
 </div>
+
+<%- include('../../public/layouts/footer') %>
