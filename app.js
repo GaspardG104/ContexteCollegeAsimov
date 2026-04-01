@@ -9,6 +9,7 @@ const app = express();
 // Middlewares
 app.use(cors());
 app.use(express.json()); // Pour lire le JSON envoyé dans les requêtes
+app.use(express.urlencoded({ extended: true }));
 
 // Cette ligne est CRUCIALRE pour le CSS et les images
 app.use(express.static(path.join(__dirname, 'public')));

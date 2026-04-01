@@ -1,0 +1,40 @@
+<%- include('../partials/header') %>
+
+<div class="container py-5">
+    <div class="card shadow-sm mx-auto" style="max-width: 600px;">
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">Modifier la recherche</h4>
+        </div>
+        <div class="card-body">
+            <form action="/stages/edit/<%= recherche.id_recherche %>" method="POST">
+                <div class="mb-3">
+                    <label class="form-label">Entreprise contactée</label>
+                    <input type="text" name="entreprise_contactee" class="form-control" value="<%= recherche.entreprise_contactee %>" required>
+                </div>
+                
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Lettres envoyées</label>
+                        <input type="number" name="nb_lettres_envoyees" class="form-control" value="<%= recherche.nb_lettres_envoyees %>">
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Lettres reçues</label>
+                        <input type="number" name="nb_lettres_recues" class="form-control" value="<%= recherche.nb_lettres_recues %>">
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Notes / Résultat</label>
+                    <textarea name="resultat" class="form-control" rows="3"><%= recherche.resultat %></textarea>
+                </div>
+
+                <div class="d-flex justify-content-between">
+                    <a href="/stages/view" class="btn btn-secondary">Annuler</a>
+                    <button type="submit" class="btn btn-success">Enregistrer</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<%- include('../partials/footer') %>

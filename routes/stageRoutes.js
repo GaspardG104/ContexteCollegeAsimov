@@ -11,4 +11,13 @@ router.post('/create', stageController.createStage);
 // Route pour VOIR la liste des stages (avec l'alerte > 15 recherches)
 router.get('/view', stageController.getAllStages);
 
+// Affichage du formulaire de modif
+router.get('/edit/:id', stageController.renderEditForm);
+
+// Traitement de la modif
+router.post('/edit/:id', stageController.updateRecherche);
+
+// Suppression
+router.get('/delete/:id', stageController.deleteRecherche);
+
 module.exports = router;
