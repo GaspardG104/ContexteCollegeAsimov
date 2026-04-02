@@ -28,32 +28,32 @@
                     <div class="form-text">L'élève qui porte l'initiative du projet.</div>
                 </div>
 
-<div class="row">
-    <div class="col-md-6 mb-3">
-        <label class="form-label fw-bold">Date de début</label>
-        <% 
-            let d_debut = "";
-            if (projet.date_debut) {
-                let d = new Date(projet.date_debut);
-                // On force le format AAAA-MM-JJ manuellement pour l'input
-                d_debut = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
-            }
-        %>
-        <input type="date" name="date_debut" class="form-control" value="<%= d_debut %>">
-    </div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-bold">Date de début</label>
+                        <% 
+                            let d_debut = "";
+                            if (projet.date_debut) {
+                                let d = new Date(projet.date_debut);
+                                // On force le format AAAA-MM-JJ manuellement pour l'input
+                                d_debut = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+                            }
+                        %>
+                        <input type="date" name="date_debut" class="form-control" value="<%= d_debut %>">
+                    </div>
 
-    <div class="col-md-6 mb-3">
-        <label class="form-label fw-bold">Date de fin prévue</label>
-        <% 
-            let d_fin = "";
-            if (projet.date_fin) {
-                let d = new Date(projet.date_fin);
-                d_fin = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
-            }
-        %>
-        <input type="date" name="date_fin" class="form-control" value="<%= d_fin %>">
-    </div>
-</div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-bold">Date de fin prévue</label>
+                        <% 
+                            let d_fin = "";
+                            if (projet.date_fin) {
+                                let d = new Date(projet.date_fin);
+                                d_fin = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+                            }
+                        %>
+                        <input type="date" name="date_fin" class="form-control" value="<%= d_fin %>">
+                    </div>
+                </div>
                 <div class="mb-3">
                     <label class="form-label fw-bold">Description et objectifs</label>
                     <textarea name="description" class="form-control" rows="4"><%= projet.description %></textarea>
