@@ -1,0 +1,73 @@
+<%- include('../../public/layouts/header') %>
+
+<div class="container py-5">
+    <div class="card shadow-sm border-0">
+        <div class="card-header bg-primary text-white py-3">
+            <h3 class="mb-0"><i class="bi bi-pencil-square me-2"></i>Modifier le Projet : <%= projet.libelle %></h3>
+        </div>
+        <div class="card-body p-4">
+            <form action="/projets/edit/<%= projet.id_projet %>" method="POST">
+                
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Nom du projet</label>
+                    <input type="text" name="libelle" class="form-control" 
+                           value="<%= projet.libelle %>" required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Élève responsable</label>
+                    <select class="form-select" name="id_eleve_responsable">
+                        <option value="">-- Sélectionner un élève --</option>
+                        <% eleves.forEach(eleve => { %>
+                            <option value="<%= eleve.id_eleve %>" 
+                                <%= projet.id_eleve_responsable == eleve.id_eleve ? 'selected' : '' %>>
+                                <%= eleve.nom.toUpperCase() %> <%= eleve.prenom %>
+                            </option>
+                        <% }) %>
+                    </select>
+                    <div class="form-text">L'élève qui porte l'initiative du projet.</div>
+                </div>
+
+<div class="row">
+    <div class="col-md-6 mb-3">
+        <label class="form-label fw-bold">Date de début</label>
+        <% 
+            let d_debut = "";
+            if (projet.date_debut) {
+                let d = new Date(projet.date_debut);
+                // On force le format AAAA-MM-JJ manuellement pour l'input
+                d_debut = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+            }
+        %>
+        <input type="date" name="date_debut" class="form-control" value="<%= d_debut %>">
+    </div>
+
+    <div class="col-md-6 mb-3">
+        <label class="form-label fw-bold">Date de fin prévue</label>
+        <% 
+            let d_fin = "";
+            if (projet.date_fin) {
+                let d = new Date(projet.date_fin);
+                d_fin = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+            }
+        %>
+        <input type="date" name="date_fin" class="form-control" value="<%= d_fin %>">
+    </div>
+</div>
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Description et objectifs</label>
+                    <textarea name="description" class="form-control" rows="4"><%= projet.description %></textarea>
+                </div>
+
+                <hr class="my-4">
+
+                <div class="d-flex justify-content-between">
+                    <a href="/projets/view" class="btn btn-outline-secondary px-4">Annuler</a>
+                    <button type="submit" class="btn btn-primary px-4">Enregistrer les modifications</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<%- include('../../public/layouts/footer') %>

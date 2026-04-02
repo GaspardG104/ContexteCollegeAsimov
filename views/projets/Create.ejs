@@ -1,0 +1,56 @@
+<%- include('../../public/layouts/header') %>
+
+<div class="container py-5">
+    <div class="card shadow-sm border-0">
+        <div class="card-header bg-success text-white py-3">
+            <h3 class="mb-0"><i class="bi bi-plus-circle me-2"></i>Nouveau Projet Établissement</h3>
+        </div>
+        <div class="card-body p-4">
+            <form action="/projets/create" method="POST">
+                
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Nom du projet</label>
+                    <input type="text" name="libelle" class="form-control" placeholder="Ex: Club de programmation" required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Élève responsable</label>
+                    <select class="form-select" name="id_eleve_responsable">
+                        <option value="" selected>-- Sélectionner un élève --</option>
+                        <% eleves.forEach(eleve => { %>
+                            <option value="<%= eleve.id_eleve %>">
+                                <%= eleve.nom.toUpperCase() %> <%= eleve.prenom %>
+                            </option>
+                        <% }) %>
+                    </select>
+                    <div class="form-text">L'élève qui porte l'initiative du projet.</div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-bold">Date de début</label>
+                        <input type="date" name="date_debut" class="form-control">
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-bold">Date de fin prévue</label>
+                        <input type="date" name="date_fin" class="form-control">
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Description et objectifs</label>
+                    <textarea name="description" class="form-control" rows="4" placeholder="Décrivez brièvement le but du projet..."></textarea>
+                </div>
+
+                <hr class="my-4">
+
+                <div class="d-flex justify-content-between">
+                    <a href="/projets/view" class="btn btn-outline-secondary px-4">Annuler</a>
+                    <button type="submit" class="btn btn-success px-4">Enregistrer le projet</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<%- include('../../public/layouts/footer') %>
