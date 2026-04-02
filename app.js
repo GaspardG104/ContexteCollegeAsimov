@@ -11,11 +11,14 @@ app.use(cors());
 app.use(express.json()); // Pour lire le JSON envoyé dans les requêtes
 app.use(express.urlencoded({ extended: true }));
 
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
+
+
 // Cette ligne est CRUCIALRE pour le CSS et les images
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'views'));
+
 
 // Route de test
 app.get('/', (req, res) => {
@@ -45,3 +48,11 @@ app.use('/stages', stageRoutes);
 
 // On dit à Express : "Toutes les routes commençant par /projet utilisent projetRoutes"
 app.use('/projets', projetRoutes);
+
+app.use((req, res, next) => {
+  res.setHeader(
+    "Content-Security-Policy",
+    "default-src 'self'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self' https://cdn.jsdelivr.net; img-src 'self' data:;"
+  );
+  next();
+});

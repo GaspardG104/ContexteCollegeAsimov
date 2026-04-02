@@ -11,10 +11,10 @@ router.get('/view', projetController.viewAllProjets);
 
 // Affiche le formulaire de création
 // Note : Tu devras créer renderCreateForm dans ton contrôleur
-/* router.get('/create', projetController.renderCreateForm);
+router.get('/create', projetController.renderCreateForm);
 
 // Traite l'envoi du formulaire de création
-router.post('/create', projetController.createProjet); */
+router.post('/create', projetController.createProjet);
 
 // --- ROUTES POUR LA MODIFICATION (UPDATE) ---
 

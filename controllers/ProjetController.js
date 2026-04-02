@@ -1,7 +1,7 @@
 const Projet = require('../models/Projet');
 const path = require('path');
 
-// Au lieu de faire db.query(...) directement :
+// Au lieu de faire Projet.query(...) directement :
 exports.viewAllProjets = async (req, res) => {
     try {
         const projets = await Projet.getAll(); // On utilise ta fonction du modèle !
@@ -17,10 +17,10 @@ exports.renderEditForm = async (req, res) => {
         const id = req.params.id;
 
         // 1. On récupère les données du projet (id_projet et non id_recherche)
-        const [projets] = await db.query('SELECT * FROM projets WHERE id_projet = ?', [id]);
+        const [projets] = await Projet.query('SELECT * FROM projets WHERE id_projet = ?', [id]);
         
         // 2. On récupère la liste des élèves pour le menu déroulant du responsable
-        const [eleves] = await db.query('SELECT id_eleve, nom, prenom FROM eleves');
+        const [eleves] = await Projet.query('SELECT id_eleve, nom, prenom FROM eleves');
 
         if (projets.length === 0) {
             return res.status(404).send("Projet introuvable");
@@ -60,7 +60,7 @@ exports.deleteProjet = async (req, res) => {
 exports.renderCreateForm = async (req, res) => {
     try {
         // On a besoin de la liste des élèves pour le menu déroulant du responsable
-        const [eleves] = await db.query('SELECT id_eleve, nom, prenom FROM eleves ORDER BY nom ASC');
+        const [eleves] = await Projet.query('SELECT id_eleve, nom, prenom FROM eleves ORDER BY nom ASC');
         
         res.render('projets/Create', { 
             eleves: eleves, 

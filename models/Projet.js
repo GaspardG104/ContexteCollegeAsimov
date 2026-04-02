@@ -18,14 +18,22 @@ const Projet = {
 
     // Mettre à jour unprojet
     update: async (id, data) => {
-        const sql = 'UPDATE projets SET ? WHERE id_recherche = ?';
-        return connection.query(sql, [data, id]);
+        const cleanData = {
+            libelle: data.libelle,
+            description: data.description,
+            date_debut: data.date_debut || null,
+            date_fin: data.date_fin || null,
+            id_eleve_responsable: data.id_eleve_responsable || null
+        };
+
+        const sql = 'UPDATE projets SET ? WHERE id_projet = ?';
+        return connection.query(sql, [cleanData, id]);
     },
 
     
     // Supprimer un projet
     delete: async (id) => {
-        const sql = 'DELETE FROM projets WHERE id_recherche = ?';
+        const sql = 'DELETE FROM projets WHERE id_projet = ?';
         return connection.query(sql, [id]);
     },
 
@@ -43,7 +51,7 @@ const Projet = {
             data.id_eleve_responsable || null
         ];
         
-        const [result] = await db.query(sql, values);
+        const [result] = await connection.query(sql, values);
         return result.insertId;
     }
 
