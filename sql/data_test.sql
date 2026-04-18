@@ -1,11 +1,37 @@
-INSERT INTO parents (nom, prenom, email) 
-VALUES ('Vernes', 'Pierre', 'p.vernes@email.fr');
+INSERT INTO parents (nom, prenom, email) VALUES 
+('Vernes', 'Pierre', 'p.vernes@email.fr'),
+('Hugo', 'Léopoldine', 'l.hugo@email.fr'),
+('Sand', 'Maurice', 'm.sand@email.fr'),
+('Zola', 'Alexandrine', 'a.zola@email.fr'),
+('Curie', 'Pierre', 'p.curie@email.fr'),
+('Pasteur', 'Marie', 'm.pasteur@email.fr'),
+('Camus', 'Catherine', 'c.camus@email.fr'),
+('Beauvoir', 'Georges', 'g.beauvoir@email.fr'),
+('Poquelin', 'Jean', 'j.poquelin@email.fr'), 
+('Arouet', 'François', 'f.arouet@email.fr'), 
+('Dumas', 'Thomas', 't.dumas@email.fr');
 
-INSERT INTO classes (niveau, lettre, annee_scolaire) 
-VALUES (6, 'A', '2025-2026');
 
-INSERT INTO eleves (nom, prenom, identifiant_import, id_parent, id_classe_actuelle) 
-VALUES ('Vernes', 'Jules', 'jvernes01', 1, 1);
+
+
+INSERT INTO classes (niveau, lettre, annee_scolaire) VALUES 
+(6, 'A', '2025-2026'),
+(5, 'B', '2025-2026'),
+(4, 'C', '2025-2026');
+
+INSERT INTO eleves (nom, prenom, identifiant_import, id_parent, id_classe_actuelle) VALUES 
+('Vernes', 'Jules', 'jvernes01', 1, 1),
+('Hugo', 'Victor', 'vhugo01', 2, 1),
+('Sand', 'George', 'gsand01', 3, 1),
+('Zola', 'Emile', 'ezola01', 4, 2),
+('Curie', 'Marie', 'mcurie01', 5, 2),
+('Pasteur', 'Louis', 'lpasteur01', 6, 3),
+('Camus', 'Albert', 'acamus01', 7, 1),
+('Beauvoir', 'Simone', 'sbeauvoir01', 8, 3),
+('Moliere', 'Jean-Baptiste', 'jmoliere01', 9, 2),
+('Voltaire', 'Francois', 'fvoltaire01', 10, 1),
+('Dumas', 'Alexandre', 'adumas01', 11, 2);
+
 
 INSERT INTO enseignants (nom, prenom) VALUES 
 ('Durand', 'Sophie'),
