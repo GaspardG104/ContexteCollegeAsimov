@@ -1,11 +1,23 @@
 const express = require('express');
 const router = express.Router();
 const projetController = require('../controllers/ProjetController');
+const Projet = require('../models/Projet');
 
 // --- ROUTES POUR LA CONSULTATION (READ) ---
 
 // Affiche la liste de tous les projets (Ta page View.ejs)
 router.get('/view', projetController.viewAllProjets);
+
+
+// POUR l'API LOURDE
+router.get('/api/json', async (req, res) => {
+    try {
+        const projets = await Projet.getAll(); 
+        res.json(projets); 
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
 
 // --- ROUTES POUR LA CRÉATION (CREATE) ---
 
