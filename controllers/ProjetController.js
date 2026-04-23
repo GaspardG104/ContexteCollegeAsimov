@@ -1,13 +1,30 @@
 const Projet = require('../models/Projet');
 const path = require('path');
 
-// Au lieu de faire Projet.query(...) directement :
+// Dans projetController.js
+
+// 1. La logique métier (récupérer les données)
+exports.getProjetsData = async () => {
+    return await Projet.getAll(); 
+};
+
+// 2. Pour le Web (EJS)
 exports.viewAllProjets = async (req, res) => {
     try {
-        const projets = await Projet.getAll(); // On utilise ta fonction du modèle !
-        res.render('projets/View', { projets, title: "Liste des projets" });
+        const projets = await exports.getProjetsData();
+        res.render('view', { projets }); // On envoie à la vue EJS
     } catch (error) {
         res.status(500).send(error.message);
+    }
+};
+
+// 3. Pour l'API (Java)
+exports.apiGetAllProjets = async (req, res) => {
+    try {
+        const projets = await exports.getProjetsData();
+        res.json(projets); // On envoie du JSON brut
+    } catch (error) {
+        res.status(500).json({ error: error.message });
     }
 };
 
