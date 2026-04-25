@@ -18,21 +18,7 @@ exports.viewAllProjets = async (req, res) => {
     }
 };
 
-exports.apiGetAllProjets = async (req, res) => {
-    try {
-        const projets = await Projet.getAll();
-        // On s'assure que c'est bien un tableau, même vide
-        const dataToSend = projets || []; 
-        
-        console.log("API envoyée à Java : ", dataToSend.length, "projets");
-        
-        // On force le Header JSON et on envoie
-        res.setHeader('Content-Type', 'application/json');
-        return res.status(200).json(dataToSend); 
-    } catch (error) {
-        return res.status(500).json([]); // Envoie un tableau vide en cas d'erreur
-    }
-};
+
 
 // Affiche le formulaire de modification
 exports.renderEditForm = async (req, res) => {
@@ -108,6 +94,22 @@ exports.createProjet = async (req, res) => {
     }
 };
 
+exports.apiGetAllProjets = async (req, res) => {
+    try {
+        const projets = await Projet.getAll();
+        // On s'assure que c'est bien un tableau, même vide
+        const dataToSend = projets || []; 
+        
+        console.log("API envoyée à Java : ", dataToSend.length, "projets");
+        
+        // On force le Header JSON et on envoie
+        res.setHeader('Content-Type', 'application/json');
+        return res.status(200).json(dataToSend); 
+    } catch (error) {
+        return res.status(500).json([]); // Envoie un tableau vide en cas d'erreur
+    }
+};
+
 // Créer un projet (API)
 exports.apiCreateProjet = async (req, res) => {
     try {
@@ -117,6 +119,7 @@ exports.apiCreateProjet = async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 };
+
 
 // Modifier un projet (API)
 exports.apiUpdateProjet = async (req, res) => {
