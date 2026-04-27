@@ -40,14 +40,22 @@ app.listen(PORT, () => {
     console.log(`Serveur démarré sur : http://localhost:${PORT}`);
 });
 
+
+
+// Imports pour le WEB (HTML)
 const stageRoutes = require('./routes/stageRoutes');
 const projetRoutes = require('./routes/projetRoutes');
 
-// On dit à Express : "Toutes les routes commençant par /stages utilisent stageRoutes"
-app.use('/stages', stageRoutes);
+// Imports pour l'API (JSON pour Java)
+const ApiProjetRoutes = require('./api/routes/ApiProjetRoutes'); // Vérifie bien le chemin
+const ApiStageRoutes = require('./api/routes/ApiStageRoutes');
 
-// On dit à Express : "Toutes les routes commençant par /projet utilisent projetRoutes"
-app.use('/projets', projetRoutes);
+app.use('/projets', projetRoutes);      // Pour le navigateur
+app.use('/api/projets', ApiProjetRoutes); // Pour le JavaFX
+
+app.use('/stages', stageRoutes);        // Pour le navigateur
+app.use('/api/stages', ApiStageRoutes);   // Pour le JavaFX
+
 
 app.use((req, res, next) => {
   res.setHeader(

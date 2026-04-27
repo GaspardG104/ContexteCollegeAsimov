@@ -28,24 +28,4 @@ router.post('/edit/:id', projetController.updateProjet);
 router.get('/delete/:id', projetController.deleteProjet);
 
 
-// Pour le JAVA
-
-
-// --- ROUTES POUR LA CONSULTATION (READ) ---
-
-router.get('/api/projets', projetController.apiGetAllProjets);
-
-// 2. Créer (POST)
-// Java enverra un objet JSON à cette route
-router.post('/api/projets', projetController.apiCreateProjet); 
- // pour la liste des élèves (pour le menu déroulant du responsable)
-router.get('/api/eleves', projetController.apiGetAllEleves);
-
-// 3. Supprimer (DELETE ou POST)
-// Pour Java, il est plus propre d'utiliser DELETE
-router.delete('/api/projets/:id', projetController.apiDeleteProjet);
-
-// 4. Pour modifier
-router.put('/api/projets/:id', projetController.apiUpdateProjet);
-
 module.exports = router;
