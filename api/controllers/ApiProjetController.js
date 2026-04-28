@@ -1,6 +1,15 @@
 const Projet = require('../../models/Projet');
 const path = require('path');
 
+/**
+ * Récupère la liste de tous les projets pour l'API.
+ * * @async
+ * @function apiGetAllProjets
+ * @param {import('express').Request} req - L'objet de requête Express.
+ * @param {import('express').Response} res - L'objet de réponse Express.
+ * @returns {Promise<Object>} Une promesse qui résout avec la réponse JSON contenant le tableau de projets.
+ * @throws {Error} Renvoie un statut 500 avec un tableau vide en cas d'erreur serveur.
+ */
 
 exports.apiGetAllProjets = async (req, res) => {
     try {
@@ -18,7 +27,15 @@ exports.apiGetAllProjets = async (req, res) => {
     }
 };
 
-// Créer un projet (API)
+/**
+ * Crée un nouveau projet.
+ * * @async
+ * @function apiCreateProjet
+ * @param {import('express').Request} req - L'objet de requête Express contenant les données dans `req.body`.
+ * @param {import('express').Response} res - L'objet de réponse Express.
+ * @returns {Promise<void>} Envoie un statut 201 et l'ID du projet créé.
+ */
+
 exports.apiCreateProjet = async (req, res) => {
     try {
         const newId = await Projet.create(req.body); // req.body contiendra le JSON envoyé par Java
@@ -29,7 +46,15 @@ exports.apiCreateProjet = async (req, res) => {
 };
 
 
-// Modifier un projet (API)
+/**
+ * Met à jour un projet existant via son identifiant.
+ * * @async
+ * @function apiUpdateProjet
+ * @param {import('express').Request} req - L'objet de requête Express (ID dans `req.params.id`).
+ * @param {import('express').Response} res - L'objet de réponse Express.
+ * @returns {Promise<void>} Message de confirmation de mise à jour.
+ */
+
 exports.apiUpdateProjet = async (req, res) => {
     try {
         await Projet.update(req.params.id, req.body);
@@ -39,7 +64,16 @@ exports.apiUpdateProjet = async (req, res) => {
     }
 };
 
-// Supprimer un projet (API)
+
+/**
+ * Supprime un projet via son identifiant.
+ * * @async
+ * @function apiDeleteProjet
+ * @param {import('express').Request} req - L'objet de requête Express (ID dans `req.params.id`).
+ * @param {import('express').Response} res - L'objet de réponse Express.
+ * @returns {Promise<void>} Message de confirmation de suppression.
+ */
+
 exports.apiDeleteProjet = async (req, res) => {
     try {
         await Projet.delete(req.params.id);
@@ -49,7 +83,16 @@ exports.apiDeleteProjet = async (req, res) => {
     }
 };
 
-// pour la liste des éléves dans le java
+
+/**
+ * Récupère la liste de tous les élèves (nom, prénom) pour l'application Java.
+ * * @async
+ * @function apiGetAllEleves
+ * @param {import('express').Request} req - L'objet de requête Express.
+ * @param {import('express').Response} res - L'objet de réponse Express.
+ * @returns {Promise<void>} Envoie un tableau d'objets élèves triés par nom.
+ */
+
 exports.apiGetAllEleves = async (req, res) => {
     try {
         const [eleves] = await Projet.query('SELECT id_eleve, nom, prenom FROM eleves ORDER BY nom ASC');// a mettre dans le modele 
