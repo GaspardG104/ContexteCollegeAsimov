@@ -1,0 +1,63 @@
+classDiagram
+    class Eleve {
+        +int id_eleve
+        +string nom
+        +string prenom
+        +string identifiant
+        +string classe
+        +float moyenne_semestre
+        +consulterScolarite()
+    }
+
+    class Professeur {
+        +int id_prof
+        +string nom
+        +string prenom
+        +string matiere
+        +aiderEleve()
+    }
+
+    class Projet {
+        +int id_projet
+        +string libelle
+        +string description
+        +date date_debut
+        +date date_fin
+        +validerProjet()
+    }
+
+    class Stage {
+        +int id_stage
+        +string entreprise
+        +string contact_nom
+        +string contact_coordonnees
+        +date date_debut
+        +date date_fin
+        +int nb_lettres_envoyees
+        +string resultat_entretien
+        +genererConventionPDF()
+    }
+
+    class Parent {
+        +int id_parent
+        +string nom
+        +string prenom
+        +string courriel
+        +signerConvention()
+    }
+
+    class Option {
+        +int id_option
+        +string libelle
+        +string type
+    }
+
+    %% Relations
+    Eleve "1..*" -- "1" Professeur : a pour référent >
+    Eleve "1" -- "0..2" Option : choisit >
+    Eleve "1" -- "0..*" Stage : effectue >
+    Eleve "0..*" -- "0..*" Projet : participe à >
+    Eleve "1" -- "1" Parent : a pour parent responsable >
+    
+    Projet "0..*" -- "1" Eleve : est piloté par (Responsable) >
+    Stage "1" -- "1" Professeur : est validé par (Référent) >
