@@ -6,6 +6,7 @@ const Projet = require('../models/Projet');
 // --- ROUTES POUR LA CONSULTATION (READ) ---
 
 // Affiche la liste de tous les projets (Ta page View.ejs)
+router.get('/', (req, res) => res.redirect('/projets/view'));
 router.get('/view', projetController.viewAllProjets);
 
 // --- ROUTES POUR LA CRÉATION (CREATE) ---
