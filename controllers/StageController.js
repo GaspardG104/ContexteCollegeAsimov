@@ -1,5 +1,13 @@
 const db = require('../models/Stage');
 const path = require('path');
+const { libelle, description, date_debut, date_fin } = req.body;
+if (!libelle || libelle.trim().length === 0) {
+  return res.status(400).send('Le libellé est obligatoire.');
+}
+if (date_debut && date_fin && new Date(date_fin) < new Date(date_debut)) {
+  return res.status(400).send('La date de fin doit être après la date de début.');
+}
+
 
 // Fonction pour trouver le prochain prof (Round-Robin)
 const assignerReferent = async () => {
