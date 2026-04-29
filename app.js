@@ -1,61 +1,24 @@
 const express = require('express');
 const cors = require('cors');
-require('dotenv').config();
-const db = require('./config/db'); // On importe la connexion MySQL
-
 const path = require('path');
-const app = express();
+require('dotenv').config();
 
-// Middlewares
-app.use(cors());
-app.use(express.json()); // Pour lire le JSON envoyé dans les requêtes
-app.use(express.urlencoded({ extended: true }));
+const db = require('./config/db');
 
-app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'views'));
-
-
-// Cette ligne est CRUCIALRE pour le CSS et les images
-app.use(express.static(path.join(__dirname, 'public')));
-
-
-
-// Route de test
-app.get('/', (req, res) => {
-    res.send('L\'API Asimov est en ligne !');
-});
-
-// Route pour tester la BDD : on récupère les élèves
-app.get('/test-db', (req, res) => {
-    db.query('SELECT * FROM eleves', (err, results) => {
-        if (err) {
-            return res.status(500).json({ error: err.message });
-        }
-        res.json(results);
-    });
-});
-
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-    console.log(`Serveur démarré sur : http://localhost:${PORT}`);
-});
-
-
-
-// Imports pour le WEB (HTML)
+// Routes WEB
 const stageRoutes = require('./routes/stageRoutes');
 const projetRoutes = require('./routes/projetRoutes');
 
-// Imports pour l'API (JSON pour Java)
-const ApiProjetRoutes = require('./api/routes/ApiProjetRoutes'); // Vérifie bien le chemin
-const ApiStageRoutes = require('./api/routes/ApiStageRoutes');
+// Routes API (JSON pour JavaFX)
+const ApiProjetRoutes = require('./api/routes/ApiProjetRoutes');
+const ApiStageRoutes  = require('./api/routes/ApiStageRoutes');
 
-app.use('/projets', projetRoutes);      // Pour le navigateur
-app.use('/api/projets', ApiProjetRoutes); // Pour le JavaFX
+const app = express();
 
-app.use('/stages', stageRoutes);        // Pour le navigateur
-app.use('/api/stages', ApiStageRoutes);   // Pour le JavaFX
-
+// --- Middlewares globaux ---
+app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 app.use((req, res, next) => {
   res.setHeader(
@@ -63,4 +26,36 @@ app.use((req, res, next) => {
     "default-src 'self'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self' https://cdn.jsdelivr.net; img-src 'self' data:;"
   );
   next();
+});
+
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
+app.use(express.static(path.join(__dirname, 'public')));
+
+// --- Routes ---
+app.get('/', (req, res) => res.render('index'));
+
+app.get('/test-db', async (req, res) => {
+  try {
+    const [rows] = await db.query('SELECT * FROM eleves');
+    res.json(rows);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.use('/projets', projetRoutes);
+app.use('/api/projets', ApiProjetRoutes);
+app.use('/stages', stageRoutes);
+app.use('/api/stages', ApiStageRoutes);
+
+// 404
+app.use((req, res) => {
+  res.status(404).render('404', { url: req.originalUrl });
+});
+
+// --- Démarrage ---
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Serveur démarré sur : http://localhost:${PORT}`);
 });
