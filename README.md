@@ -6,3 +6,22 @@ Lien du PDF du contexte : http://david.roumanet.free.fr/BTS-SIO/Bloc2-Dev/400%20
 Lien du Kanban : https://padlet.com/gaspardguidetti/kanban-coll-ge-asimov-4dwtu3sxlbus4ciq
 
 <img width="1053" height="764" alt="image" src="https://github.com/user-attachments/assets/30ebc603-5b3d-4ccc-bdf4-141f9c7ae5c6" />
+
+
+# Asim'UT — Suivi de scolarité Collège-Lycée Asimov
+
+Projet du contexte d'examen BTS SIO opt. SLAM 2026.
+
+## Stack
+- Node.js + Express 5
+- EJS (vues web)
+- MySQL / MariaDB (XAMPP)
+- API REST consommée par un client JavaFX
+
+## Installation
+
+1. Cloner le dépôt
+   ```bash
+   git clone https://github.com/GaspardG104/ContexteCollegeAsimov.git
+   cd ContexteCollegeAsimov
+   npm install
