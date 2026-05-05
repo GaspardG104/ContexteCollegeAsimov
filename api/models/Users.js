@@ -1,4 +1,4 @@
-const connection = require('../config/db');
+const connection = require('../../config/db');
 
 
 const Users = {
@@ -18,6 +18,18 @@ const Users = {
         const sql = 'DELETE FROM utilisateurs WHERE id_utilisateur = ?';
         return connection.query(sql, [id]);
     },
+
+    //pour afficher la liste d'utilistauers à supprimer
+    getAllToDelete: async () => {
+            const sql = `
+                            SELECT id_utilisateur, login, role, date_depart 
+                            FROM utilisateurs 
+                            WHERE date_depart IS NOT NULL 
+                            AND date_depart <= DATE_SUB(NOW(), INTERVAL 6 MONTH)
+                        `;
+            const [rows] = await connection.query(sql);
+            return rows;
+        },
 }
 
 module.exports = Users;
