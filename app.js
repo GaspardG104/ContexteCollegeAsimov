@@ -49,12 +49,16 @@ const projetRoutes = require('./routes/projetRoutes');
 // Imports pour l'API (JSON pour Java)
 const ApiProjetRoutes = require('./api/routes/ApiProjetRoutes'); // Vérifie bien le chemin
 const ApiStageRoutes = require('./api/routes/ApiStageRoutes');
+const ApiUsersRoutes = require('./api/routes/ApiUsersRoutes');
 
 app.use('/projets', projetRoutes);      // Pour le navigateur
 app.use('/api/projets', ApiProjetRoutes); // Pour le JavaFX
 
 app.use('/stages', stageRoutes);        // Pour le navigateur
 app.use('/api/stages', ApiStageRoutes);   // Pour le JavaFX
+
+
+app.use('/api/users', ApiUsersRoutes);
 
 
 app.use((req, res, next) => {
