@@ -1,12 +1,12 @@
-//const db = require('../models/Users');
-//const path = require('path');
+const db = require('../models/Users');
+const path = require('path');
 
 
 exports.apiGetAllUsers = async (req, res) => {
     try {
-        const stages = await Users.getAll();
+        const users = await Users.getAll();
         // On s'assure que c'est bien un tableau, même vide
-        const dataToSend = utilisateurs || []; 
+        const dataToSend = users || []; 
         
         console.log("API envoyée à Java : ", dataToSend.length, "Users");
         
@@ -21,7 +21,7 @@ exports.apiGetAllUsers = async (req, res) => {
 // Supprimer un utilisateur (API)
 exports.apiDeleteUser = async (req, res) => {
     try {
-        await Stage.delete(req.params.id);
+        await Users.delete(req.params.id);
         res.json({ message: "Utilisateur supprimé !" });
     } catch (error) {
         res.status(500).json({ error: error.message });

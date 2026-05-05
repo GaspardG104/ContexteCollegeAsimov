@@ -58,7 +58,7 @@ app.use('/stages', stageRoutes);        // Pour le navigateur
 app.use('/api/stages', ApiStageRoutes);   // Pour le JavaFX
 
 
-app.use('/api/users', ApiUsersRoutes);
+app.use('/users', ApiUsersRoutes);
 
 
 app.use((req, res, next) => {
