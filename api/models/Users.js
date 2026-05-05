@@ -22,8 +22,10 @@ const Users = {
     //pour afficher la liste d'utilistauers à supprimer
     getAllToDelete: async () => {
             const sql = `
-                            SELECT id_utilisateur, login, role, date_depart 
-                            FROM utilisateurs 
+                            SELECT U.id_utilisateur, U.login, U.role, U.date_depart, E.id_classe_actuelle  
+                            FROM utilisateurs U
+                            INNER JOIN eleves E
+                            ON U.id_utilisateur = E.id_utilisateur
                             WHERE date_depart IS NOT NULL 
                             AND date_depart <= DATE_SUB(NOW(), INTERVAL 6 MONTH)
                         `;
